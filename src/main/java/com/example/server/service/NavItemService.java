@@ -7,5 +7,5 @@ import com.example.server.utils.R;
 import java.util.List;
 
 public interface NavItemService {
-    R<List<NavItemVo>> getNavItem();
+    List<NavItemVo> getNavItem();
 }

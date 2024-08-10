@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39-0ubuntu0.22.04.1)
  File Encoding         : 65001
 
- Date: 06/08/2024 10:26:17
+ Date: 10/08/2024 20:28:46
 */
 
 SET NAMES utf8mb4;
@@ -24,28 +24,35 @@ DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '文章表id',
   `main` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '文章表正文',
-  `category_id` int NULL DEFAULT NULL COMMENT '文章类别id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
+INSERT INTO `article` VALUES (3, '<h1>MarkDown示例</h1>\r\n\r\n<h3>Header 3</h3>\r\n\r\n<blockquote><p>This is a blockquote.</p><p> &gt; This is the second paragraph in the blockquote.</p><h2>This is an H2 in a blockquote</h2></blockquote>');
 
 -- ----------------------------
 -- Table structure for article_category
 -- ----------------------------
 DROP TABLE IF EXISTS `article_category`;
 CREATE TABLE `article_category`  (
-  `id` int NOT NULL COMMENT '文章类别表主键',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '文章类别表主键',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文章类别名称',
   `navitem_id` int NULL DEFAULT NULL COMMENT '导航项id',
+  `pid` int NULL DEFAULT NULL COMMENT '父级类别id',
+  `category_id` int NULL DEFAULT NULL COMMENT '文章id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章类别表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章类别表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of article_category
 -- ----------------------------
+INSERT INTO `article_category` VALUES (1, '企业项目', 2, NULL, NULL);
+INSERT INTO `article_category` VALUES (2, 'SpringBoot', 5, NULL, NULL);
+INSERT INTO `article_category` VALUES (3, 'spingboot文章1', NULL, 2, 1);
+INSERT INTO `article_category` VALUES (4, 'springboot2', NULL, 2, 2);
+INSERT INTO `article_category` VALUES (5, '肉丁数联Saas平台', NULL, 1, 3);
 
 -- ----------------------------
 -- Table structure for blogs_home
@@ -70,16 +77,23 @@ INSERT INTO `blogs_home` VALUES (1, 'https://github.com/dengqizhang', '243556301
 -- ----------------------------
 DROP TABLE IF EXISTS `navitem`;
 CREATE TABLE `navitem`  (
-  `id` int NOT NULL COMMENT '导航项主键',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '导航项主键',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '导航项名称',
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '导航项路径',
   `pid` int NULL DEFAULT NULL COMMENT '父级导航项id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '导航项表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '导航项表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of navitem
 -- ----------------------------
+INSERT INTO `navitem` VALUES (1, '首页', '/', NULL);
+INSERT INTO `navitem` VALUES (2, '项目经历', NULL, NULL);
+INSERT INTO `navitem` VALUES (3, '肉丁数联Saas平台', '/roudingSaas', 2);
+INSERT INTO `navitem` VALUES (4, '个人博客', '/caryBiogs', 2);
+INSERT INTO `navitem` VALUES (5, '技术积累', '/technology', NULL);
+INSERT INTO `navitem` VALUES (6, '网络杂谈', '/tittleTattle', NULL);
+INSERT INTO `navitem` VALUES (7, '工具收集', '/tool', NULL);
 
 -- ----------------------------
 -- Table structure for project

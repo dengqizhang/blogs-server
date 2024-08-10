@@ -1,10 +1,10 @@
 package com.example.server.service.impl;
 
-import com.example.server.domin.NavItem;
+import com.example.server.domin.ArticleCategory;
+import com.example.server.domin.vo.ArticleCategoryVo;
 import com.example.server.domin.vo.NavItemVo;
-import com.example.server.mapper.NavItemMapper;
-import com.example.server.service.NavItemService;
-import com.example.server.utils.R;
+import com.example.server.mapper.ArticleCategoryMapper;
+import com.example.server.service.ArticleCategoryService;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,22 +16,26 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class NavItemServiceImpl implements NavItemService {
+public class ArticleCategoryServiceImpl implements ArticleCategoryService {
 
-    private static final Logger log = LoggerFactory.getLogger(NavItemServiceImpl.class);
+
+    private static final Logger log = LoggerFactory.getLogger(ArticleCategoryServiceImpl.class);
     @Resource
-    private NavItemMapper navItemMapper;
+    private ArticleCategoryMapper articleCategoryMapper;
+    /**
+     * 根据id获取对应文章类别
+     * @return
+     */
     @Override
-    public List<NavItemVo> getNavItem() {
-        //获取所有导航项
-        List<NavItemVo> navItems = navItemMapper.getNavItem();
-        if (navItems.size() == 0){
-          log.info("暂无导航项");
+    public List<ArticleCategoryVo> getList() {
+        List<ArticleCategoryVo> list = articleCategoryMapper.getList();
+        if (list.size() == 0){
+            log.info("暂无导航项");
         }
         //创建Map 用于根据pid存储子项
-        Map<Long,List<NavItemVo>> pidToChildrenMap = new HashMap<>();
+        Map<Long,List<ArticleCategoryVo>> pidToChildrenMap = new HashMap<>();
         //循环全部导航项，将pid不同或是null的，设置为map的不同的键值，将数组区分开。
-        for (NavItemVo item : navItems){
+        for (ArticleCategoryVo item : list){
             Long pid = item.getPid();
             //如果当前对象的pid存在map中
             if (pidToChildrenMap.containsKey(pid)){
@@ -39,15 +43,15 @@ public class NavItemServiceImpl implements NavItemService {
                 pidToChildrenMap.get(pid).add(item);
             }else {
                 //如果pid不存在，就创建一个子项列表添加当前导航项
-                List<NavItemVo> children = new ArrayList<>();
+                List<ArticleCategoryVo> children = new ArrayList<>();
                 children.add(item);
                 pidToChildrenMap.put(pid,children);
             }
         }
 
         //构建树状结构
-        List<NavItemVo> rootItems = new ArrayList<>();
-        for (NavItemVo item : navItems){
+        List<ArticleCategoryVo> rootItems = new ArrayList<>();
+        for (ArticleCategoryVo item : list){
             if (item.getPid() == null){
                 //向返回数组设置对应map里有子项
                 buildTree(item, pidToChildrenMap);
@@ -57,14 +61,14 @@ public class NavItemServiceImpl implements NavItemService {
         return rootItems;
     }
 
-    private void buildTree(NavItemVo parent, Map<Long, List<NavItemVo>> pidToChildrenMap) {
+    private void buildTree(ArticleCategoryVo parent, Map<Long, List<ArticleCategoryVo>> pidToChildrenMap) {
         //根据父导航项id获取子项列表id
-        List<NavItemVo> children = pidToChildrenMap.get(parent.getId());
+        List<ArticleCategoryVo> children = pidToChildrenMap.get(parent.getId());
         //如果子项列表不为空
         if (children!= null) {
             //向父导航项设置
             parent.setChildren(children);
-            for (NavItemVo child : children) {
+            for (ArticleCategoryVo child : children) {
                 buildTree(child, pidToChildrenMap);
             }
         }
