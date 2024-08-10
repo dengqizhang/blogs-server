@@ -31,7 +31,6 @@ public class HomeController {
             HomeVo home = homeService.getHome();
             return R.ok(home);
         }catch (Exception e){
-
             return R.warn("请稍后再试");
         }
     }
