@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : blogs
+ Source Server         : blogs1
  Source Server Type    : MySQL
  Source Server Version : 80039 (8.0.39-0ubuntu0.22.04.1)
  Source Host           : 123.57.23.218:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39-0ubuntu0.22.04.1)
  File Encoding         : 65001
 
- Date: 10/08/2024 20:28:46
+ Date: 18/08/2024 17:31:18
 */
 
 SET NAMES utf8mb4;
@@ -25,12 +25,16 @@ CREATE TABLE `article`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '文章表id',
   `main` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '文章表正文',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
-INSERT INTO `article` VALUES (3, '<h1>MarkDown示例</h1>\r\n\r\n<h3>Header 3</h3>\r\n\r\n<blockquote><p>This is a blockquote.</p><p> &gt; This is the second paragraph in the blockquote.</p><h2>This is an H2 in a blockquote</h2></blockquote>');
+INSERT INTO `article` VALUES (1, '2222');
+INSERT INTO `article` VALUES (3, '\r\n<h1>This is a Heading</h1>\r\n<p>This is a paragraph.</p>\r\n<img src=\"avatar.png\" alt=\"Avatar\" style=\"width:200px\">');
+INSERT INTO `article` VALUES (4, '111');
+INSERT INTO `article` VALUES (5, '肉丁数联文章介绍');
+INSERT INTO `article` VALUES (6, '个人博客文章介绍');
 
 -- ----------------------------
 -- Table structure for article_category
@@ -43,16 +47,23 @@ CREATE TABLE `article_category`  (
   `pid` int NULL DEFAULT NULL COMMENT '父级类别id',
   `category_id` int NULL DEFAULT NULL COMMENT '文章id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章类别表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章类别表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of article_category
 -- ----------------------------
 INSERT INTO `article_category` VALUES (1, '企业项目', 2, NULL, NULL);
 INSERT INTO `article_category` VALUES (2, 'SpringBoot', 5, NULL, NULL);
-INSERT INTO `article_category` VALUES (3, 'spingboot文章1', NULL, 2, 1);
+INSERT INTO `article_category` VALUES (3, 'spingboot文章1', 5, 2, 1);
 INSERT INTO `article_category` VALUES (4, 'springboot2', NULL, 2, 2);
-INSERT INTO `article_category` VALUES (5, '肉丁数联Saas平台', NULL, 1, 3);
+INSERT INTO `article_category` VALUES (5, '肉丁数联Saas平台', 3, NULL, 5);
+INSERT INTO `article_category` VALUES (6, 'Java', 5, NULL, NULL);
+INSERT INTO `article_category` VALUES (7, 'Mysql', 5, NULL, NULL);
+INSERT INTO `article_category` VALUES (8, '个人博客', 4, NULL, 6);
+INSERT INTO `article_category` VALUES (9, 'java1', 5, 6, 3);
+INSERT INTO `article_category` VALUES (10, '前端被淘汰了吗？', 6, NULL, 3);
+INSERT INTO `article_category` VALUES (11, 'Springboot3新特性', 6, NULL, 1);
+INSERT INTO `article_category` VALUES (12, 'md文档和html转换', 7, NULL, 3);
 
 -- ----------------------------
 -- Table structure for blogs_home
@@ -82,13 +93,13 @@ CREATE TABLE `navitem`  (
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '导航项路径',
   `pid` int NULL DEFAULT NULL COMMENT '父级导航项id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '导航项表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '导航项表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of navitem
 -- ----------------------------
 INSERT INTO `navitem` VALUES (1, '首页', '/', NULL);
-INSERT INTO `navitem` VALUES (2, '项目经历', NULL, NULL);
+INSERT INTO `navitem` VALUES (2, '项目经历', '/projectExperience', NULL);
 INSERT INTO `navitem` VALUES (3, '肉丁数联Saas平台', '/roudingSaas', 2);
 INSERT INTO `navitem` VALUES (4, '个人博客', '/caryBiogs', 2);
 INSERT INTO `navitem` VALUES (5, '技术积累', '/technology', NULL);
