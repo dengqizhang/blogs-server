@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.server.mapper.ArticleCategoryMapper">
     <select id="getList" resultType="com.example.server.domin.vo.ArticleCategoryVo">
-        select * from article_category
+        select * from article_category where navitem_id = #{navItemId}
     </select>
 
 </mapper>

@@ -27,8 +27,8 @@ public class ArticleCategoryServiceImpl implements ArticleCategoryService {
      * @return
      */
     @Override
-    public List<ArticleCategoryVo> getList() {
-        List<ArticleCategoryVo> list = articleCategoryMapper.getList();
+    public List<ArticleCategoryVo> getList(Long navItemId) {
+        List<ArticleCategoryVo> list = articleCategoryMapper.getList(navItemId);
         if (list.size() == 0){
             log.info("暂无导航项");
         }

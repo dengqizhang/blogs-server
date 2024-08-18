@@ -11,5 +11,5 @@ public interface ArticleCategoryService {
      * 根据id获取对应文章类别
      * @return
      */
-    List<ArticleCategoryVo> getList();
+    List<ArticleCategoryVo> getList(Long navItemId);
 }

@@ -31,9 +31,11 @@ public class ArticleCategoryController {
      * @return
      */
     @GetMapping("/getArticleCategory")
-    public R<List<ArticleCategoryVo>> getArticleCategory(){
+    public R<List<ArticleCategoryVo>> getArticleCategory(@RequestParam("navItemId") Long navItemId){
+
+        System.out.println(navItemId);
         try {
-            List<ArticleCategoryVo> list = articleCategoryService.getList();
+            List<ArticleCategoryVo> list = articleCategoryService.getList(navItemId);
             return R.ok(list);
         }catch (Exception e){
             log.info(e.getMessage());
